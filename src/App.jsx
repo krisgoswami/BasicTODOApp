@@ -9,7 +9,7 @@ function App() {
     e.preventDefault();
     setTodo(currentTodo => {
       return [
-        ...todo, {
+        ...currentTodo, {
           id: crypto.randomUUID(),
           title: newItem,
           completed: false
@@ -18,31 +18,63 @@ function App() {
     })
   }
 
+  const toggleTodo = (id, completed) => {
+    setTodo(currentTodo => {
+      return currentTodo.map(todo => {
+        if (todo.id === id) {
+          return { ...todo, completed }
+        }
+        return todo;
+      })
+    })
+  }
+
+  const deleteTodo = (id) => {
+    setTodo(currentTodo => {
+      return currentTodo.filter(todo => todo.id !== id);
+    })
+  }
+
   return (
     <>
-      <form onClick={handleSubmit}>
-        <div>
+      <form
+        onSubmit={handleSubmit}
+        className='new-item-form'
+      >
+        <div className='form-row'>
           <h1>TODO App</h1>
-          <label htmlFor='newItem'>Add item</label>
+          <label htmlFor='newItem'>Type a todo you want to add</label>
           <input
             value={newItem}
-            onChange={(e) => setNewItem(e.target.value)}
+            onChange={e => setNewItem(e.target.value)}
             type='text'
             id='newItem'
           />
-          <button>Add</button>
         </div>
+        <button className='btn'>Add</button>
       </form>
 
-      <h1>TODO list</h1>
-      <ul>
-        <li>
-          <label>
-            <input type='checkbox' />
-            Item 1
-          </label>
-          <button>Delete</button>
-        </li>
+      <h1 className='header'>TODO list</h1>
+      <ul className='list'>
+        {todo.map(todo => {
+          return (
+            <li>
+              <label>
+                <input
+                  type='checkbox'
+                  checked={todo.completed}
+                  onClick={e => toggleTodo(todo.id, e.target.checked)}
+                />
+                {todo.title}
+              </label>
+              <button
+                className='btn btn-danger'
+                onClick={() => deleteTodo(todo.id)}
+              >Delete</button>
+            </li>
+          )
+        })}
+
       </ul>
     </>
   )
