@@ -16,6 +16,7 @@ function App() {
         }
       ]
     })
+    setNewItem("");
   }
 
   const toggleTodo = (id, completed) => {

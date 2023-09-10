@@ -4,7 +4,7 @@
   }
   
   body {
-    background: #333;
+    background: #122536;
     color: hsl(200, 100%, 90%);
     max-width: 400px;
     padding: 1rem;
@@ -76,7 +76,7 @@
   }
   
   .list li:has(input:checked) label {
-    color: hsl(200, 20%, 40%);
+    color: hsl(200, 22%, 44%);
   }
   
   .list {
